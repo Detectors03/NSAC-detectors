@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <!-- <link rel="stylesheet" href="../style.css" />-->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap");
+
+      /*font-family: 'Poppins', sans-serif;*/
+
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        font-family: Poppins;
+        background: #002a3f;
+      }
+
+      section {
+        padding: 20px;
+      }
+      .row-main {
+        justify-content: center;
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        left: 27%;
+      }
+      input[type="file"] {
+        display: none;
+      }
+      label {
+        color: white;
+        height: 60px;
+        width: 250px;
+        background-color: #f5af09;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        font-size: 20px;
+        margin: auto;
+        left: 11%;
+        top: 70%;
+        cursor: pointer;
+      }
+      .form-div {
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        height: auto;
+        min-height: 500px;
+        width: 100%;
+        min-width: 700px;
+
+        margin: auto;
+      }
+
+      #main-header {
+        font-size: 28px;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: 30px;
+        color: #f5af09;
+      }
+      #main-form {
+        width: 100%;
+        height: 100%;
+      }
+      .img-upload {
+        height: 290px;
+        width: 290px;
+        align-items: center;
+        margin-top: 25px;
+
+        border-radius: 5px;
+      }
+
+      #button-analyze {
+        height: 60px;
+        width: 250px;
+        background-color: #f5af09;
+        border: none;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        font-size: 20px;
+        color: white;
+        top: 70%;
+        right: 11%;
+        font-family: Poppins;
+
+        cursor: pointer;
+      }
+      .fingerprint {
+        width: 100%;
+        height: 100%;
+      }
+
+      .fingerprint.scanning::after {
+        content: "";
+        position: absolute;
+        width: 300px;
+        height: 7px;
+        top: 0;
+        left: 28.5%;
+
+        background-image: linear-gradient(
+          to bottom,
+          rgba(16, 145, 16, 0),
+          rgba(12, 161, 57, 0.8)
+        );
+        animation: scanning 0.8s linear infinite;
+      }
+
+      @keyframes scanning {
+        0% {
+          top: 5%;
+        }
+        100% {
+          top: 60%;
+        }
+      }
+
+      .result-div {
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="mainsec">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1 id="main-header">Hazard Detection</h1>
+          </div>
+        </div>
+
+        <div class="row row-main">
+          <div class="col-md-8 col-12">
+            <div class="form-div">
+              <form
+                id="main-from"
+                method="POST"
+                action="/submit"
+                enctype="multipart/form-data"
+              >
+                <div>
+                  <input
+                    type="file"
+                    id="files"
+                    name="userfile"
+                    accept="image/*"
+                    onchange="loadfile(event)"
+                  />
+                  <label for="files"> Choose a photo</label>
+                  <div class="fingerprint scanning">
+                    <img
+                      id="output"
+                      class="img-upload"
+                      src="/images/photo.png"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <input
+                    type="submit"
+                    id="button-analyze"
+                    name="Analyze"
+                    value="Analyze"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      var loadfile = function (event) {
+        var output = document.getElementById("output");
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+          URL.revokeObjectURL(output.src);
+        };
+      };
+    </script>
+  </body>
+</html>
