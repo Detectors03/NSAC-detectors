@@ -1,5 +1,6 @@
 import numpy as np
 from flask import Flask, request, render_template
+import caption
 
 
 app = Flask(__name__)
@@ -17,8 +18,9 @@ def submit_data():
         path = "./static/{}".format(f.filename)
         f.save(path)
 
-        myresult = predict()
-
+        preprocessdata = caption.preprocess_image(path)
+        myresult = caption.predict(preprocessdata)
+        print(myresult)
     return render_template("result.html", result=myresult)
 
 
