@@ -125,9 +125,14 @@
         <div class="row row-main">
           <div class="col-md-8 col-12">
             <div class="form-div result-div">
-              <div id="image-result">Image will be here</div>
 
-              <div id="result-content">here will be data</div>
+
+              <div id="result-content">
+                {% if result %}
+                   <h1>{{result}} is coming</h1>
+
+                {% endif %}   
+              </div>
             </div>
           </div>
         </div>
