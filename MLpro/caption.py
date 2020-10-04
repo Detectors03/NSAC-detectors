@@ -86,20 +86,34 @@
 #     caption = predict_caption(photo)
 #     # keras.backend.clear_session()
 #     return caption
+
+
+#this is my code
+#required modules
 import tensorflow as tf 
 from keras.preprocessing import image
 import numpy as np
-#from keras.models import load_model
+from keras.models import load_model
 model = tf.keras.models.load_model('/content/gdrive/My Drive/Data/cyclone_model.h5')
 from keras.applications.vgg16 import preprocess_input
-img = image.load_img('/content/gdrive/My Drive/Data/cyclone/54.jpg', target_size=(224, 224)) #insert a random covid-19 x-ray image
-imgplot = plt.imshow(img)
-x = image.img_to_array(img)
-x = np.expand_dims(x, axis=0)
-img_data = preprocess_input(x)
-classes = model.predict(img_data)
-New_pred = np.argmax(classes, axis=1)
-if New_pred==[1]:
-  print('Prediction: No-hazard')
-else:
-  print('Prediction: Cyclone')
+
+#processing image and returning in data form
+#img will be the image that we will provide by input in web app
+def preprocess_image(img):
+  img = image.load_img(img, target_size=(224, 224)) #insert a random cyclone image
+  imgplot = plt.imshow(img)
+  x = image.img_to_array(img)
+  x = np.expand_dims(x, axis=0)
+  img_data = preprocess_input(x)
+  return img_data
+
+img_data=preprocess_image(img)
+
+#returning prediction
+def predict(img_data):
+  classes = model.predict(img_data)
+  New_pred = np.argmax(classes, axis=1)
+  if New_pred==[1]:
+    return "Prediction: No-hazard"
+  else:
+    return "Prediction: Cyclone"
